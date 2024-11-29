@@ -6,7 +6,7 @@
 /*   By: aaferyad <aaferyad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 11:45:31 by aaferyad          #+#    #+#             */
-/*   Updated: 2024/11/23 12:16:29 by aaferyad         ###   ########.fr       */
+/*   Updated: 2024/11/29 12:45:14 by aaferyad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <fcntl.h>
 
-# define BUFFER_SIZE 42
+# define BUFFER_SIZE 1024
 
 char	*get_next_line(int fd);
 void    *ft_calloc(size_t nmemb, size_t size);

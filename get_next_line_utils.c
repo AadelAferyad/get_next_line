@@ -6,7 +6,7 @@
 /*   By: aaferyad <aaferyad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:12:31 by aaferyad          #+#    #+#             */
-/*   Updated: 2024/11/23 23:18:25 by aaferyad         ###   ########.fr       */
+/*   Updated: 2024/11/29 13:05:57 by aaferyad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void    *ft_calloc(size_t nmemb, size_t size)
 {
         void    *ptr;
         size_t  msize;
+	size_t	i;
 
         msize = nmemb * size;
         if (nmemb && msize / nmemb != size)
@@ -23,8 +24,9 @@ void    *ft_calloc(size_t nmemb, size_t size)
         ptr = malloc(msize);
         if (!ptr)
                 return (NULL);
-	while (--msize >= 0)
-		((unsigned char *) ptr)[msize] = 0;
+	i = 0;
+	while (msize >= i)
+		((unsigned char *) ptr)[i++] = 0;
         return (ptr);
 }
 size_t	ft_strlen(char const *str)
@@ -68,7 +70,11 @@ char	*ft_strdup(const char *s)
 	ptr = malloc(sizeof(char) * (len + 1));
 	if (!ptr)
 		return (NULL);
-	while 
+	while (s[i])
+	{
+		ptr[i] = s[i];
+		i++;
+	}
 	ptr[len] = '\0';
 	return (ptr);
 }
