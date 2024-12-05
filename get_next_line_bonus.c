@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaferyad <aaferyad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/23 11:47:31 by aaferyad          #+#    #+#             */
-/*   Updated: 2024/12/05 15:18:57 by aaferyad         ###   ########.fr       */
+/*   Created: 2024/12/05 15:02:20 by aaferyad          #+#    #+#             */
+/*   Updated: 2024/12/05 15:19:01 by aaferyad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 
 char	*ft_strchr(const char *s, int c)

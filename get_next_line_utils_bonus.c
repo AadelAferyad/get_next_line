@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaferyad <aaferyad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/23 12:12:31 by aaferyad          #+#    #+#             */
-/*   Updated: 2024/12/05 15:19:15 by aaferyad         ###   ########.fr       */
+/*   Created: 2024/12/05 15:02:57 by aaferyad          #+#    #+#             */
+/*   Updated: 2024/12/05 15:19:17 by aaferyad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 void    *ft_calloc(size_t nmemb, size_t size)
 {
