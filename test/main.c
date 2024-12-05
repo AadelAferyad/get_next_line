@@ -5,27 +5,17 @@
 int	main(void)
 {
 	int	fd, fd0, fd1;
-	int	i;
 	char	*b;
 
 	
 	fd0 = open("t", O_CREAT, O_RDONLY);
 	fd1 = open("y", O_CREAT, O_RDONLY);
-	i = 0;
-	do
+	while (b = get_next_line(fd0))
 	{
-		if (i % 2)
-			fd = fd0;
-		else
-			fd = fd1;
-		b = get_next_line(fd);
-		i++;
-		if (!b)
-			break ;
-		printf("%s\n", b);
+		printf("line : %s", b != NULL ? b : "NULL");
 		free(b);
-	} while (b);
-
-
+	}
+	b = get_next_line(fd0);
+	printf("\n%s\n", b != NULL ? b : "NULL");
 	return (0);
 }

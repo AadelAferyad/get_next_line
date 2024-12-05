@@ -6,12 +6,32 @@
 /*   By: aaferyad <aaferyad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 11:47:31 by aaferyad          #+#    #+#             */
-/*   Updated: 2024/12/05 15:18:57 by aaferyad         ###   ########.fr       */
+/*   Updated: 2024/12/05 17:05:02 by aaferyad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+void	garbage_collector(char **lines, char *buffer, int flag)
+{
+	if (!flag)
+	{
+		free(buffer);
+		buffer = NULL;
+	}
+	else if (flag == 1)
+	{
+		free(*lines);
+		*lines = NULL;
+	}
+	else if (flag == 2)
+	{
+		free(buffer);
+		buffer = NULL;
+		free(*lines);
+		*lines = NULL;
+	}
+}
 
 char	*ft_strchr(const char *s, int c)
 {
@@ -37,6 +57,8 @@ char	*extract_line(char **lines)
 	char	*line;
 	unsigned int	size;
 
+	if (!(*lines))
+		return (NULL);
 	new_line_add = ft_strchr(*lines, '\n');	
 	if (!new_line_add)
 		new_line_add = ft_strchr(*lines, '\0');
@@ -44,17 +66,17 @@ char	*extract_line(char **lines)
 	line = malloc(sizeof(char) * (size + 1));
 	if (!line)
 	{
-		free(lines);
+		garbage_collector(lines, NULL, 1);
 		return (NULL);
 	}
 	ft_strlcpy(line, *lines, size + 1);
 	if (!(*new_line_add))
 	{
-		free(*lines);
+		garbage_collector(lines, NULL, 1);
 		return (line);
 	}
 	new_line_add = ft_strdup(new_line_add + 1);
-	free(*lines);
+	garbage_collector(lines, NULL, 1);
 	*lines = new_line_add;
 	return (line);
 }
@@ -70,16 +92,17 @@ char	*read_line(int fd, char **lines)
 	while (!ft_strchr(*lines, '\n'))
 	{
 		byte = read(fd, buffer, BUFFER_SIZE);
-		if (byte <= 0)
+		if (byte == -1)
 		{
-			free(buffer);
-			free(*lines);
+			garbage_collector(lines, buffer, 2);
 			return (NULL);
 		}
-		buffer[BUFFER_SIZE] = '\0';
+		if (byte == 0)
+			break ;
+		buffer[byte] = '\0';
 		*lines = ft_strjoin(*lines, buffer);
 	}
-	free(buffer);
+	garbage_collector(lines, buffer, 0);
 	return (extract_line(lines));
 }
 
