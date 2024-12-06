@@ -12,10 +12,10 @@ int	main(void)
 	fd1 = open("y", O_CREAT, O_RDONLY);
 	while (b = get_next_line(fd0))
 	{
-		printf("line : %s", b != NULL ? b : "NULL");
+		printf("line : %s", b);
 		free(b);
 	}
 	b = get_next_line(fd0);
-	printf("\n%s\n", b != NULL ? b : "NULL");
+	printf("%s", b);
 	return (0);
 }

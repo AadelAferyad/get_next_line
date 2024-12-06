@@ -62,7 +62,7 @@ char	*extract_line(char **lines)
 	new_line_add = ft_strchr(*lines, '\n');	
 	if (!new_line_add)
 		new_line_add = ft_strchr(*lines, '\0');
-	size = new_line_add - *lines;
+	size = new_line_add - *lines + 1;
 	line = malloc(sizeof(char) * (size + 1));
 	if (!line)
 	{
