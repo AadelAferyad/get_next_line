@@ -33,24 +33,6 @@ void	garbage_collector(char **lines, char *buffer, int flag)
 	}
 }
 
-char	*ft_strchr(const char *s, int c)
-{
-	int	i;
-
-	i = 0;
-	if (!s)
-		return (NULL);
-	while (s[i])
-	{
-		if ((unsigned char) s[i] == (unsigned char) c)
-			return (&((char *)s)[i]);
-		i++;
-	}
-	if ((unsigned char) c == 0)
-		return (&((char *)s)[i]);
-	return (NULL);
-}
-
 char	*extract_line(char **lines)
 {
 	char	*new_line_add;
@@ -70,7 +52,7 @@ char	*extract_line(char **lines)
 		return (NULL);
 	}
 	ft_strlcpy(line, *lines, size + 1);
-	if (!(*new_line_add))
+	if (!(*new_line_add) || !(*(new_line_add + 1)))
 	{
 		garbage_collector(lines, NULL, 1);
 		return (line);
