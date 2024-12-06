@@ -33,18 +33,26 @@ void	garbage_collector(char **lines, char *buffer, int flag)
 	}
 }
 
-char	*extract_line(char **lines)
+char	*extract_line_helper(char *lines, unsigned int *size)
 {
 	char	*new_line_add;
-	char	*line;
+
+	new_line_add = ft_strchr(lines, '\n');
+	if (!new_line_add)
+		new_line_add = ft_strchr(lines, '\0');
+	*size = new_line_add - lines + 1;
+	return (new_line_add);
+}
+
+char	*extract_line(char **lines)
+{
+	char			*new_line_add;
+	char			*line;
 	unsigned int	size;
 
 	if (!(*lines))
 		return (NULL);
-	new_line_add = ft_strchr(*lines, '\n');	
-	if (!new_line_add)
-		new_line_add = ft_strchr(*lines, '\0');
-	size = new_line_add - *lines + 1;
+	new_line_add = extract_line_helper(*lines, &size);
 	line = malloc(sizeof(char) * (size + 1));
 	if (!line)
 	{
@@ -90,7 +98,7 @@ char	*read_line(int fd, char **lines)
 
 char	*get_next_line(int fd)
 {
-	static char *lines;
+	static char	*lines;
 
 	return (read_line(fd, &lines));
 }

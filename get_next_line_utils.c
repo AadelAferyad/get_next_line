@@ -12,22 +12,22 @@
 
 #include "get_next_line.h"
 
-void    *ft_calloc(size_t nmemb, size_t size)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-        void    *ptr;
-        size_t  msize;
+	void	*ptr;
+	size_t	msize;
 	size_t	i;
 
-        msize = nmemb * size;
-        if (nmemb && msize / nmemb != size)
-                return (NULL);
-        ptr = malloc(msize);
-        if (!ptr)
-                return (NULL);
+	msize = nmemb * size;
+	if (nmemb && msize / nmemb != size)
+		return (NULL);
+	ptr = malloc(msize);
+	if (!ptr)
+		return (NULL);
 	i = 0;
 	while (msize > i)
 		((unsigned char *) ptr)[i++] = 0;
-        return (ptr);
+	return (ptr);
 }
 
 char	*ft_strchr(const char *s, int c)
@@ -72,7 +72,7 @@ char	*ft_strdup(const char *s)
 {
 	int		len;
 	char	*ptr;
-	int	i;
+	int		i;
 
 	len = 0;
 	while (s[len])
@@ -98,7 +98,7 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	if (!s1)
 		return (ft_strdup(s2));
-	if(!s2)
+	if (!s2)
 		return (ft_strdup(s1));
 	len1 = 0;
 	len2 = 0;
