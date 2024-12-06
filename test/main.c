@@ -6,16 +6,25 @@ int	main(void)
 {
 	int	fd, fd0, fd1;
 	char	*b;
+	int	i;
 
-	
+	i = 0;	
 	fd0 = open("t", O_CREAT, O_RDONLY);
 	fd1 = open("y", O_CREAT, O_RDONLY);
-	while (b = get_next_line(fd0))
+	fd = fd0;
+	while (b = get_next_line(fd))
 	{
+		if (i % 2)
+			fd = fd1;
+		else
+			fd = fd0;
+		if (!b)
+			break ;
 		printf("line : %s", b);
 		free(b);
+		i++;
 	}
-	b = get_next_line(fd0);
-	printf("%s", b);
+	/*b = get_next_line(fd0);*/
+	/*printf("\n%s\n", b);*/
 	return (0);
 }

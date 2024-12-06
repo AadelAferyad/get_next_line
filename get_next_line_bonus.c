@@ -12,7 +12,7 @@
 
 #include "get_next_line_bonus.h"
 
-void	garbage_collector(char **lines, char *buffer, int flag)
+void	garbage_collector(char *lines, char *buffer, int flag)
 {
 	if (!flag)
 	{
@@ -21,15 +21,15 @@ void	garbage_collector(char **lines, char *buffer, int flag)
 	}
 	else if (flag == 1)
 	{
-		free(*lines);
-		*lines = NULL;
+		free(lines);
+		lines = NULL;
 	}
 	else if (flag == 2)
 	{
 		free(buffer);
 		buffer = NULL;
-		free(*lines);
-		*lines = NULL;
+		free(lines);
+		lines = NULL;
 	}
 }
 
@@ -44,30 +44,30 @@ char	*extract_line_helper(char *lines, unsigned int *size)
 	return (new_line_add);
 }
 
-char	*extract_line(char **lines)
+char	*extract_line(char **lines, int fd)
 {
 	char			*new_line_add;
 	char			*line;
 	unsigned int	size;
 
-	if (!(*lines))
+	if (!(lines[fd]))
 		return (NULL);
-	new_line_add = extract_line_helper(*lines, &size);
+	new_line_add = extract_line_helper(lines[fd], &size);
 	line = malloc(sizeof(char) * (size + 1));
 	if (!line)
 	{
-		garbage_collector(lines, NULL, 1);
+		garbage_collector(lines[fd], NULL, 1);
 		return (NULL);
 	}
-	ft_strlcpy(line, *lines, size + 1);
+	ft_strlcpy(line, lines[fd], size + 1);
 	if (!(*new_line_add) || !(*(new_line_add + 1)))
 	{
-		garbage_collector(lines, NULL, 1);
+		garbage_collector(lines[fd], NULL, 1);
 		return (line);
 	}
 	new_line_add = ft_strdup(new_line_add + 1);
-	garbage_collector(lines, NULL, 1);
-	*lines = new_line_add;
+	garbage_collector(lines[fd], NULL, 1);
+	lines[fd] = new_line_add;
 	return (line);
 }
 
@@ -84,21 +84,23 @@ char	*read_line(int fd, char **lines)
 		byte = read(fd, buffer, BUFFER_SIZE);
 		if (byte == -1)
 		{
-			garbage_collector(lines, buffer, 2);
+			garbage_collector(lines[fd], buffer, 2);
 			return (NULL);
 		}
 		if (byte == 0)
 			break ;
 		buffer[byte] = '\0';
-		*lines = ft_strjoin(*lines, buffer);
+		lines[fd] = ft_strjoin(*lines, buffer);
 	}
-	garbage_collector(lines, buffer, 0);
-	return (extract_line(lines));
+	garbage_collector(lines[fd], buffer, 0);
+	return (extract_line(lines, fd));
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*lines;
+	static char	*lines[MAX_FD];
 
-	return (read_line(fd, &lines));
+	if (fd > MAX_FD)
+		return (NULL);
+	return (read_line(fd, lines));
 }
