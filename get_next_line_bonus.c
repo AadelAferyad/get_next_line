@@ -12,7 +12,7 @@
 
 #include "get_next_line_bonus.h"
 
-void	garbage_collector(char *lines, char *buffer, int flag)
+void	garbage_collector(char **lines, char *buffer, int flag, int fd)
 {
 	if (!flag)
 	{
@@ -21,15 +21,15 @@ void	garbage_collector(char *lines, char *buffer, int flag)
 	}
 	else if (flag == 1)
 	{
-		free(lines);
-		lines = NULL;
+		free(lines[fd]);
+		lines[fd] = NULL;
 	}
 	else if (flag == 2)
 	{
 		free(buffer);
 		buffer = NULL;
-		free(lines);
-		lines = NULL;
+		free(lines[fd]);
+		lines[fd] = NULL;
 	}
 }
 
@@ -56,17 +56,17 @@ char	*extract_line(char **lines, int fd)
 	line = malloc(sizeof(char) * (size + 1));
 	if (!line)
 	{
-		garbage_collector(lines[fd], NULL, 1);
+		garbage_collector(lines, NULL, 1, fd);
 		return (NULL);
 	}
 	ft_strlcpy(line, lines[fd], size + 1);
 	if (!(*new_line_add) || !(*(new_line_add + 1)))
 	{
-		garbage_collector(lines[fd], NULL, 1);
+		garbage_collector(lines, NULL, 1, fd);
 		return (line);
 	}
 	new_line_add = ft_strdup(new_line_add + 1);
-	garbage_collector(lines[fd], NULL, 1);
+	garbage_collector(lines, NULL, 1, fd);
 	lines[fd] = new_line_add;
 	return (line);
 }
@@ -79,20 +79,20 @@ char	*read_line(int fd, char **lines)
 	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!buffer)
 		return (NULL);
-	while (!ft_strchr(*lines, '\n'))
+	while (!ft_strchr(lines[fd], '\n'))
 	{
 		byte = read(fd, buffer, BUFFER_SIZE);
 		if (byte == -1)
 		{
-			garbage_collector(lines[fd], buffer, 2);
+			garbage_collector(lines, buffer, 2, fd);
 			return (NULL);
 		}
 		if (byte == 0)
 			break ;
 		buffer[byte] = '\0';
-		lines[fd] = ft_strjoin(*lines, buffer);
+		lines[fd] = ft_strjoin(lines[fd], buffer);
 	}
-	garbage_collector(lines[fd], buffer, 0);
+	garbage_collector(lines, buffer, 0, fd);
 	return (extract_line(lines, fd));
 }
 
