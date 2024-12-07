@@ -100,5 +100,7 @@ char	*get_next_line(int fd)
 {
 	static char	*lines;
 
+	if (BUFFER_SIZE <= 0)
+		return (NULL);
 	return (read_line(fd, &lines));
 }

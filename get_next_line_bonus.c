@@ -100,7 +100,7 @@ char	*get_next_line(int fd)
 {
 	static char	*lines[MAX_FD];
 
-	if (fd > MAX_FD)
+	if (fd > MAX_FD || BUFFER_SIZE <= 0)
 		return (NULL);
 	return (read_line(fd, lines));
 }
