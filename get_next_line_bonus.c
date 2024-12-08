@@ -76,7 +76,7 @@ char	*read_line(int fd, char **lines)
 	char	*buffer;
 	int		byte;
 
-	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	buffer = ft_calloc((size_t) BUFFER_SIZE + 1, sizeof(char));
 	if (!buffer)
 		return (NULL);
 	while (!ft_strchr(lines[fd], '\n'))
@@ -100,7 +100,7 @@ char	*get_next_line(int fd)
 {
 	static char	*lines[MAX_FD];
 
-	if (fd > MAX_FD || BUFFER_SIZE <= 0)
+	if (fd >= MAX_FD || BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
 	return (read_line(fd, lines));
 }
