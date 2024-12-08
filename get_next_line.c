@@ -12,12 +12,12 @@
 
 #include "get_next_line.h"
 
-void	garbage_collector(char **lines, char *buffer, int flag)
+void	garbage_collector(char **lines, char **buffer, int flag)
 {
 	if (!flag)
 	{
-		free(buffer);
-		buffer = NULL;
+		free(*buffer);
+		*buffer = NULL;
 	}
 	else if (flag == 1)
 	{
@@ -26,8 +26,8 @@ void	garbage_collector(char **lines, char *buffer, int flag)
 	}
 	else if (flag == 2)
 	{
-		free(buffer);
-		buffer = NULL;
+		free(*buffer);
+		*buffer = NULL;
 		free(*lines);
 		*lines = NULL;
 	}
@@ -84,7 +84,7 @@ char	*read_line(int fd, char **lines)
 		byte = read(fd, buffer, BUFFER_SIZE);
 		if (byte == -1)
 		{
-			garbage_collector(lines, buffer, 2);
+			garbage_collector(lines, &buffer, 2);
 			return (NULL);
 		}
 		if (byte == 0)
@@ -92,7 +92,7 @@ char	*read_line(int fd, char **lines)
 		buffer[byte] = '\0';
 		*lines = ft_strjoin(*lines, buffer);
 	}
-	garbage_collector(lines, buffer, 0);
+	garbage_collector(lines, &buffer, 0);
 	return (extract_line(lines));
 }
 
