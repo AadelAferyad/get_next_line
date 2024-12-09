@@ -101,9 +101,6 @@ char	*get_next_line(int fd)
 	static char	*lines;
 
 	if (BUFFER_SIZE <= 0 || fd < 0)
-	{
-		printf("ikhan\n");
 		return (NULL);
-	}
 	return (read_line(fd, &lines));
 }
