@@ -74,7 +74,7 @@ char	*extract_line(char **lines)
 char	*read_line(int fd, char **lines)
 {
 	char	*buffer;
-	int		byte;
+	ssize_t	byte;
 
 	buffer = ft_calloc((size_t) BUFFER_SIZE + 1, sizeof(char));
 	if (!buffer)
@@ -101,6 +101,9 @@ char	*get_next_line(int fd)
 	static char	*lines;
 
 	if (BUFFER_SIZE <= 0 || fd < 0)
+	{
+		printf("ikhan\n");
 		return (NULL);
+	}
 	return (read_line(fd, &lines));
 }
