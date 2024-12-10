@@ -17,10 +17,10 @@
 #  define BUFFER_SIZE 20
 # endif
 
-# include <unistd.h>
-# include <stdlib.h>
 # include <stdio.h>
+# include <stdlib.h>
 # include <fcntl.h>
+# include <unistd.h>
 
 char	*get_next_line(int fd);
 void	*ft_calloc(size_t nmemb, size_t size);

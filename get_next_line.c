@@ -76,6 +76,8 @@ char	*read_line(int fd, char **lines)
 	char	*buffer;
 	ssize_t	byte;
 
+	if (BUFFER_SIZE <= 0)
+		return (NULL);
 	buffer = ft_calloc((size_t) BUFFER_SIZE + 1, sizeof(char));
 	if (!buffer)
 		return (NULL);
@@ -100,7 +102,7 @@ char	*get_next_line(int fd)
 {
 	static char	*lines;
 
-	if (BUFFER_SIZE <= 0 || fd < 0)
+	if (fd < 0)
 		return (NULL);
 	return (read_line(fd, &lines));
 }
